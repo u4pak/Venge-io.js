@@ -48,6 +48,15 @@ module.exports = class Venge {
         const res = await this.#fetch(`?request=get_profile_details&username=${username}`);
         return res ?? {};
     };
+    
+    async sendVG(username, amount, message) {
+        if (!username) return this.#log("Username field is required");
+        if (!amount) return this.#log("Ammount field is required");
+        if (!message) return this.#log("Message field is required");
+        const params = new URLSearchParams({username, amount, message}).toString();
+        const res = await this.#fetch("?request=trade_vg", {body: params});
+        return res?.result ?? [];
+    };
 
     async getSkinList() {
         const res = await this.#fetch("?request=get_skins_list");
